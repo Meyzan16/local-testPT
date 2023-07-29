@@ -21,9 +21,8 @@ const Absen = () => {
   
   const handleAbsen = async () => {
         const jam = date.getHours()
-        // const jam = 15;
 
-        if(jam >= 7 && jam <= 17)
+        if(jam >= 8 && jam <= 17)
         {
               if(jam >= 8 && jam < 12) 
               {
@@ -45,7 +44,6 @@ const Absen = () => {
                     console.log(error);
                     toast.error("error checkin absensi");
                 }
-
               }
 
               if(jam >= 12 && jam <= 17) {

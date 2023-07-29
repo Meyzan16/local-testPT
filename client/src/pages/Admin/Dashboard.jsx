@@ -1,10 +1,29 @@
 import React from 'react'
 import Layout from '../../components/layout/Layout';
 import MenuNavbar from '../../components/layout/MenuNavbar';
-import { useAuth } from '../../context/Auth';
+import axios from 'axios'
+import { useState,useEffect } from 'react'
+import { toast } from 'react-hot-toast'
+import { useAuth } from '../../context/Auth'
+import DashboardCom from '../../components/DashboardCom';
 
 const Dashboard = () => {
   const [auth] = useAuth();
+  const [getuser,setUsers] = useState([]);
+
+  const getUserSingle = async () =>{
+    try {
+        const {data} = await axios.get(`/api/v1/users/get-user/${auth?.user?._id}`)
+        setUsers(data?.userDoc)
+    } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong")
+    }
+  }
+
+  useEffect(() => {
+     getUserSingle();
+  },[])
 
   return (
     <Layout title={'Dashboard - Admin'}>
@@ -15,54 +34,7 @@ const Dashboard = () => {
              border-solid border-teal-500 shadow-lg mt-6'>
               <h1 className='text-2xl text-primary'>Admin dashboard</h1>
 
-              <div className='mt-6 md:max-w-xl text-base font-normal'>
-
-                <div className='md:flex items-center mb-6 '>
-
-                  <div className='md:w-1/5 text-lg md:mr-6 mb-2'>
-                    nama
-                  </div>
-
-                  <div className='md:w-4/5 w-full bg-gray-100 px-4 py-2 rounded-xl border-l-2 border-l-primary shadow-md'>
-                    {auth?.user?.name}
-                  </div>
-                </div>
-
-                <div className='md:flex items-center mb-6 '>
-
-                  <div className='md:w-1/5 text-lg md:mr-6 mb-2'>
-                    email
-                  </div>
-
-                  <div className='md:w-4/5 w-full bg-gray-100 px-4 py-2 rounded-xl border-l-2 border-l-primary shadow-md'>
-                    {auth?.user?.email}
-                  </div>
-                </div>
-
-                <div className='md:flex items-center mb-6 '>
-
-                  <div className='md:w-1/5 text-lg md:mr-6 mb-2'>
-                    contact
-                  </div>
-
-                  <div className='md:w-4/5 w-full bg-gray-100 px-4 py-2 rounded-xl border-l-2 border-l-primary shadow-md'>
-                    {auth?.user?.phone}
-                  </div>
-                </div>
-                <div className='md:flex items-center mb-6 '>
-
-                  <div className='md:w-1/5 text-lg md:mr-6 mb-2'>
-                    posisi
-                  </div>
-
-                  <div className='md:w-4/5 w-full bg-gray-100 px-4 py-2 rounded-xl border-l-2 border-l-primary shadow-md'>
-                    {auth?.user?.posisi}
-                  </div>
-                </div>
-
-                
-              </div>
-
+              <DashboardCom datauser={getuser} type="admin" />
 
           </div>
 

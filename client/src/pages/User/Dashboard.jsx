@@ -34,7 +34,7 @@ const Dashboard = () => {
             leading-relaxed text-xl font-bold border-l-4
              border-solid border-teal-500 shadow-lg'>
               
-            <DashboardCom datauser={getuser} />
+            <DashboardCom datauser={getuser} type="user" />
 
 
 

@@ -6,7 +6,7 @@ import FormUser from './User/FormUser';
 import axios from 'axios';
 
 
-const DashboardCom = ({datauser}) => {
+const DashboardCom = ({datauser, type}) => {
   const [isOpen, setIsOpen] = useState(false);
   const[id, setId] = useState('');
 
@@ -33,6 +33,8 @@ const DashboardCom = ({datauser}) => {
 
   return (
     <>
+          {
+            type === 'user' && (
               <button className='btn-submit' onClick={() => 
                                           {
                                             setIsOpen(true); 
@@ -40,6 +42,8 @@ const DashboardCom = ({datauser}) => {
                                           }}>
                         edit profile
               </button>
+            )
+          }
 
 
               <div className='md:flex gap-12 block items-center mt-6'>
